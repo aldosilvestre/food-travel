@@ -1,4 +1,4 @@
-from customtkinter import CTk
+import customtkinter as ctk
 # import importlib
 # import os
 # from core.Core import Core
@@ -26,9 +26,13 @@ from views.home import HomeView
 
 
 class App:
+
+    ctk.set_appearance_mode("system")
+    ctk.set_default_color_theme("green")
+
     @staticmethod
     def run():
-        root = CTk()
+        root = ctk.CTk()
         root.resizable(False, False)
         HomeView(root)
         root.mainloop()
