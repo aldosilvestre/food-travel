@@ -1,7 +1,9 @@
-# import customtkinter
+from customtkinter import CTk
 # import importlib
 # import os
-from core.Core import Core
+# from core.Core import Core
+from views.home import HomeView
+
 
 # class App:
 #     def __init__(self):
@@ -26,11 +28,10 @@ from core.Core import Core
 class App:
     @staticmethod
     def run():
-        # try:
-        app = Core.openController("login")
-        app.main()
-        # except Exception as e:
-        # print(str(e))
+        root = CTk()
+        root.resizable(False, False)
+        HomeView(root)
+        root.mainloop()
 
 
 def main():
