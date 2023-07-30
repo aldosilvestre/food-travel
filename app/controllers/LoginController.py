@@ -1,5 +1,5 @@
-from core.Controller import Controller
-
+from app.core.Controller import Controller
+from app.services.login_service import sign_in
 
 class LoginController(Controller):
     def __init__(self):
@@ -8,7 +8,6 @@ class LoginController(Controller):
     def main(self):
         self.login.main()
 
-    def signIn(self, username, password):
-        print(username)
-        print(password)
-        return False
+    @staticmethod
+    def sign_in(username, password):
+        return sign_in(username, password)

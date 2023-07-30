@@ -1,16 +1,16 @@
 class Destination:
 
-    def __init__(self, id="", name="", type="", ingredients=[], min_price=0, max_price=0, popularity=0, disponibility=0, ubication="", image=""):
-        self.id = id
-        self.name = name
-        self.type = type
-        self.ingredients = ingredients
-        self.min_price = min_price
-        self.max_price = max_price
-        self.popularity = popularity
-        self.disponibility = disponibility
-        self.ubication = ubication
-        self.image = image
+    def __init__(self, dictionary: object = {}):
+        self.id = dictionary.get('id', '')
+        self.name = dictionary.get('name', '')
+        self.type = dictionary.get('type', '')
+        self.ingredients = dictionary.get('ingredients', [])
+        self.min_price = dictionary.get('min_price', 0)
+        self.max_price = dictionary.get('max_price', 0)
+        self.popularity = dictionary.get('popularity', 0)
+        self.disponibility = dictionary.get('disponibility', 0)
+        self.ubication = dictionary.get('ubication', '')
+        self.image = dictionary.get('image', '')
 
     @classmethod
     def from_dict(cls, destionation):

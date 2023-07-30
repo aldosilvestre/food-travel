@@ -1,4 +1,9 @@
-from repository.destination import DestinationRepository
+from app.repositories.destination import DestinationRepository
+from app.models.Destination import Destination
+
+
+def find_all() -> [Destination]:
+    return DestinationRepository.find_all()
 
 
 def save(destination):

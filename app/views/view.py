@@ -1,6 +1,5 @@
 import abc
 
-
 class View(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def main(self):
