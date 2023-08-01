@@ -1,7 +1,7 @@
-from app.views.components.Component import Component
+from views.components.Component import Component
 import customtkinter as ctk
 from tkinter.font import BOLD
-from app.controllers.PlainController import PlainController
+from controllers.PlainController import PlainController
 
 
 class PlainComponent(Component):

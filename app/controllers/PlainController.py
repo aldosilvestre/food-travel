@@ -1,4 +1,4 @@
-from app.services.plain_service import find_destinies
+from services.tour_service import find_destinies
 
 
 class PlainController:
@@ -6,4 +6,5 @@ class PlainController:
         pass
 
     def getDestinies(self):
-        return [destiny.to_dict() for destiny in find_destinies()]
+        pass
+        # return [destiny.to_dict() for destiny in find_destinies()]

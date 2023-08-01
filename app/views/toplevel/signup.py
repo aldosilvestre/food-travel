@@ -1,4 +1,5 @@
 import customtkinter as ctk
+import tkinter as tk
 from tkinter.font import BOLD
 
 
@@ -14,14 +15,14 @@ class SignupView:
 
     def __init__(self, root):
         self.root = root
-        self.login = ctk.CTkToplevel(master=root)
+        self.login = tk.Toplevel(master=root)
         self.login.title("Registrarse")
         self.login.resizable(False, False)
         self.login.geometry("500x550")
         self.form = []
 
         frame = ctk.CTkFrame(self.login)
-        frame.pack(padx=10, pady=10, ipadx=10, ipady=10, anchor=ctk.CENTER)
+        frame.pack(padx=0, pady=0, ipadx=10, ipady=10, anchor=ctk.CENTER, expand=True, fill=ctk.BOTH)
 
         self.error_label = ctk.CTkLabel(frame, text="", text_color="red")
         self.error_label.grid(row=0, column=0, columnspan=2)
@@ -45,8 +46,6 @@ class SignupView:
             frame, text="Registrarse", command=self.do_signup)
         # login_button.pack(pady=20, anchor=ctk.CENTER)
         login_button.grid(row=indice, column=0, columnspan=2)
-
-
 
     def do_signup(self):
         self.show_error_message("Ocurrio un error")

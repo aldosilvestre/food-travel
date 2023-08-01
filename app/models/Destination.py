@@ -8,24 +8,13 @@ class Destination:
         self.min_price = dictionary.get('min_price', 0)
         self.max_price = dictionary.get('max_price', 0)
         self.popularity = dictionary.get('popularity', 0)
-        self.disponibility = dictionary.get('disponibility', 0)
+        self.disponibility = dictionary.get('disponibility', True)
         self.ubication = dictionary.get('ubication', '')
         self.image = dictionary.get('image', '')
 
     @classmethod
     def from_dict(cls, destionation):
-        return cls(
-            destionation['id'],
-            destionation['name'],
-            destionation['type'],
-            destionation['ingredients'],
-            destionation['min_price'],
-            destionation['max_price'],
-            destionation['popularity'],
-            destionation['disponibility'],
-            destionation['ubication'],
-            destionation['image']
-        )
+        return cls(destionation)
 
     def to_dict(self):
         return {

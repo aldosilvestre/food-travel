@@ -1,4 +1,4 @@
-from app.views.components.Component import Component
+from views.components.Component import Component
 import customtkinter as ctk
 
 

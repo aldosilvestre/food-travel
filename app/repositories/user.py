@@ -1,4 +1,4 @@
-from app.models.UserLogin import UserLogin
+from models.UserLogin import UserLogin
 class UserRepository:
     def __init__(self):
         pass

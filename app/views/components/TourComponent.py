@@ -1,47 +1,84 @@
-from app.views.components.Component import Component
+from config import CONFIG
+from views.components.Component import Component
 import customtkinter as ctk
 from tkinter.font import BOLD
-import random
+import tkintermapview as map
+from controllers.TourController import TourController
+from controllers.DestinationController import DestinationController
+
 
 class TourComponent(Component):
 
     def __init__(self, container, last_frame=None):
         super().__init__(container, last_frame)
 
-        self.title_activity = ctk.CTkLabel(self, text='Actividades', font=('Roboto', 30, BOLD))
+        self.controller = TourController()
+
+        self.tour = self.controller.get_tour()
+
+        self.contentFrame = ctk.CTkFrame(self)
+        self.contentFrame.pack(padx=5, pady=5, expand=True, fill=ctk.BOTH)
+
+        self.contentFrame.grid_columnconfigure(0, weight=1)
+        self.contentFrame.grid_columnconfigure(1, weight=1)
+        self.contentFrame.grid_rowconfigure(0, weight=1)
+
+        self.tours_frame = ctk.CTkFrame(self.contentFrame, corner_radius=5)
+        self.tours_frame.grid(row=0, column=0, padx=5, pady=5, sticky='nsew')
+
+        self.destinies_frame = ctk.CTkFrame(self.contentFrame, corner_radius=5)
+        self.destinies_frame.grid(row=0, column=1, padx=5, pady=5, sticky='nsew')
+
+        self.title_activity = ctk.CTkLabel(self.tours_frame, text='Actividades',
+                                           font=(CONFIG['font-family'], 30, BOLD))
         self.title_activity.pack(padx=5, pady=5, ipady=15, fill=ctk.X)
 
-        self.widget_activity = ctk.CTkScrollableFrame(self)
+        self.widget_activity = ctk.CTkScrollableFrame(self.tours_frame)
         self.widget_activity.pack(padx=5, pady=5, expand=True, fill=ctk.BOTH)
 
-        self.load_activities()
-
-        self.title_destiny = ctk.CTkLabel(self, text='Destinos', font=('Roboto', 30, BOLD))
+        self.title_destiny = ctk.CTkLabel(self.destinies_frame, text='Destinos', font=(CONFIG['font-family'], 30, BOLD))
         self.title_destiny.pack(padx=5, pady=5, ipady=15, fill=ctk.X)
 
-        self.widget_destiny = ctk.CTkScrollableFrame(self)
-        self.widget_destiny.pack(padx=5, pady=5, expand=True, fill=ctk.BOTH)
-
         self.show_destinies = None
+        self.load_tour()
 
         self.main()
 
-    def load_activities(self):
-        frame_activities = ctk.CTkFrame(self.widget_activity)
-        frame_activities.pack(fill=ctk.BOTH, expand=True, padx=5, pady=5)
+    def load_tour(self):
+        frame_tours = ctk.CTkFrame(self.widget_activity)
+        frame_tours.pack(fill=ctk.BOTH, expand=True, padx=5, pady=5)
 
-        for i in range(20, 40):
-            button = ctk.CTkButton(frame_activities, text=f"Item {i}", fg_color='green', font=('Roboto', 15, BOLD), anchor='w',
-                                   command=lambda it=i: self.select_activity(it))
+        for activity in self.tour.activities:
+            button = ctk.CTkButton(frame_tours, text=activity.name, fg_color='transparent',
+                                   text_color=('black', 'white'), hover_color=CONFIG['color-secondary'],
+                                   font=(CONFIG['font-family'], 15, BOLD), anchor='w',
+                                   command=lambda it=activity: self.select_activity(it))
             button.pack(fill=ctk.BOTH, expand=True, padx=5, pady=(0, 10), ipadx=5, ipady=10, anchor='w')
 
     def select_activity(self, item):
         if self.show_destinies is not None:
             self.show_destinies.destroy()
 
-        self.show_destinies = ctk.CTkFrame(self.widget_destiny)
-        self.show_destinies.pack(fill=ctk.BOTH, expand=True, padx=5, pady=5)
+        self.show_destinies = map.TkinterMapView(self.destinies_frame, width=400, corner_radius=10, max_zoom=17)
+        self.show_destinies.set_zoom(16)
+        self.show_destinies.pack(padx=5, pady=5, fill="both", expand=True)
 
-        for i in range(1, random.randint(5, 10)):
-            label = ctk.CTkLabel(self.show_destinies, text=f"Item {i}", fg_color='blue', font=('Roboto', 15, BOLD), anchor='w', corner_radius=5)
-            label.pack(fill=ctk.BOTH, expand=True, padx=5, pady=(0, 5), ipadx=5, ipady=5, anchor='w')
+        self.load_map()
+
+        self.show_destinies.set_position(item.destiny.ubication.coordinates[0], item.destiny.ubication.coordinates[1],
+                                         marker=False)
+
+    def load_map(self):
+        activities = self.tour.activities
+        for activity in activities:
+            destiny = activity.destiny
+            self.show_destinies.set_marker(destiny.ubication.coordinates[0], destiny.ubication.coordinates[1],
+                                           text=destiny.name, command=lambda it=activity: self.show_data(it))
+
+        destinies = [tuple(activity.destiny.ubication.coordinates) for activity in self.tour.activities]
+
+        self.show_destinies.set_path(destinies)
+
+    def show_data(self, activity):
+        print(activity)
+        pass

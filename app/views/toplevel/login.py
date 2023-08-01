@@ -1,13 +1,15 @@
 import customtkinter as ctk
-from app.core.Core import Core
-from app.controllers.LoginController import LoginController
+from core.Core import Core
+from controllers.LoginController import LoginController
+from CTkMessagebox import CTkMessagebox
+import tkinter as tk
 
 
 class LoginView:
 
     def __init__(self, root):
         self.root = root
-        self.login = ctk.CTkToplevel(master=root)
+        self.login = tk.Toplevel(master=root)
         self.login.title("Iniciar sesión")
         self.login.resizable(False, False)
         self.login.geometry("300x400")
@@ -15,7 +17,7 @@ class LoginView:
         # self.login.attributes("-type", "dialog")
 
         frame = ctk.CTkFrame(self.login)
-        frame.pack(padx=10, pady=10, fill="both", expand=True)
+        frame.pack(padx=0, pady=0, fill="both", expand=True)
 
         label = ctk.CTkLabel(frame, text="Iniciar sesión", font=("Roboto", 30))
         label.pack(pady=20)
@@ -47,9 +49,9 @@ class LoginView:
             if result:
                 self.login.destroy()
                 self.root.destroy()
-                Core.openController('home')
+                Core.open_controller('home')
             else:
-                self.show_error_message("Usuario o Contraseña incorrectos")
+                CTkMessagebox(title="Error", message="Usuario o Contraseña incorrectos", icon="cancel")
                 return
 
     def show_error_message(self, message):
