@@ -1,17 +1,21 @@
 import tkinter as tk
-from views.components.NewDestinyComponent import NewDestinyComponent
+import os
+import importlib
+from config import PATH
 
 
 class Operations:
-    @staticmethod
-    def create_destiny():
+
+    def go_to(self, component):
         toplevel = tk.Toplevel()
+        toplevel.resizable(False, False)
         toplevel.lift()
         toplevel.focus_force()
-        NewDestinyComponent(toplevel)
 
-    def create_admin_user(self):
-        pass
+        if os.path.exists(f"{PATH}/views/components/{component}.py"):
+            module = importlib.import_module(f"views.components.{component}")
+            class_ = getattr(module, f"{component}")
+            class_(toplevel)
 
 
 operations = Operations()

@@ -1,5 +1,5 @@
 class Ubication:
-    def __init__(self, id=None, address="", coordenates=""):
+    def __init__(self, id=None, address="", coordenates=[]):
         self.id = id
         self.address = address
         self.coordinates = coordenates
@@ -15,6 +15,6 @@ class Ubication:
     def to_dict(self):
         return {
             "id": self.id,
-            "address": self.name,
+            "address": self.address,
             "coordinates": self.coordinates
         }

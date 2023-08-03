@@ -4,6 +4,7 @@ import customtkinter as ctk
 class Component(ctk.CTkFrame):
     def __init__(self, container, last_frame):
         super().__init__(container)
+        self.container = container
         if last_frame is not None:
             last_frame.destroy()
 

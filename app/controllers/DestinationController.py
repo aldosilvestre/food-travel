@@ -1,12 +1,17 @@
 from services.destination_service import destination_service
 from models.Destination import Destination
+from models.Ubication import Ubication
 
 
 class DestinationController:
 
-    def new_destiny(self, **kwargs):
-        new_destination = Destination(dict(kwargs))
-        destination_service.save(new_destination)
+    def new_destiny(self, dictionary):
+        new_destination = Destination(dictionary)
+        new_destination.ingredients = dictionary['ingredients'].split(',')
+        new_ubication = Ubication(address=dictionary['address'],
+                                              coordenates=[dictionary['ubication_latitude'],
+                                                           dictionary['ubication_longitude']])
+        destination_service.save(new_destination, new_ubication)
 
     def get_destiny_by_id(self, id):
         return destination_service.get_destiny_by_id(id)

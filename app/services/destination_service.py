@@ -14,7 +14,9 @@ class DestinationService:
             result.append(DestinationDto(destiny, ubication))
         return result
 
-    def save(self, destination):
+    def save(self, destination, ubication):
+        id_ubication = ubication_service.save(ubication)
+        destination.ubication = id_ubication
         return DestinationRepository.save(destination)
 
     def delete(self, destination):
@@ -24,7 +26,10 @@ class DestinationService:
         print("Updating destination")
 
     def get_destiny_by_id(self, destiny_id) -> Destination:
-        return DestinationRepository.find_by_id(destiny_id)
+        destiny = DestinationRepository.find_by_id(destiny_id)
+        ubication = ubication_service.find_by_id(destiny.ubication)
+        destiny.ubication = ubication
+        return destiny
 
     def find_by_address(self, addr):
         result = []

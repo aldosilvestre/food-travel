@@ -1,18 +1,13 @@
 class Activity:
-    def __init__(self, id=None, name="", destiny_id=None, datetime=""):
-        self.id = id
-        self.name = name
-        self.destiny_id = destiny_id
-        self.datetime = datetime
+    def __init__(self, dictionary: object = {}):
+        self.id = dictionary.get('id', "")
+        self.name = dictionary.get('name', "")
+        self.destiny_id = dictionary.get('destiny_id', '')
+        self.datetime = dictionary.get('datetime', '')
 
     @classmethod
     def from_dict(cls, activity):
-        return cls(
-            activity['id'],
-            activity['name'],
-            activity['destiny_id'],
-            activity['datetime']
-        )
+        return cls(activity)
 
     def to_dict(self):
         return {

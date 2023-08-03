@@ -6,13 +6,21 @@ from views.toplevel.signup import SignupView
 from tkinter.font import BOLD
 import os
 
+
 class DashboardView(ctk.CTk):
 
     def __init__(self, controller):
         super().__init__()
 
+        ancho = 1000
+        alto = 700
+        ancho_pantalla = self.winfo_screenwidth()
+        alto_pantalla = self.winfo_screenheight()
+        x = (ancho_pantalla - ancho) // 2
+        y = (alto_pantalla - alto) // 2
+        self.geometry(f"{ancho}x{alto}+{x}+{y}")
+
         self.title("Foodie Tour")
-        self.geometry("1000x700")
 
         self.iconbitmap(get_resource("img/icon.ico"))
 

@@ -1,6 +1,14 @@
 class User:
-    def __init__(self, id=None, name="", lastname="", history=[]):
+    def __init__(self, id=None, history=[]):
         self.id = id
-        self.name = name
-        self.lastname = lastname
         self.history = history
+
+    @classmethod
+    def from_dict(cls, dictionary):
+        return cls(dictionary)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "history": self.history
+        }

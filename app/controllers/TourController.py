@@ -1,9 +1,7 @@
-from services.tour_service import get_tour
+from services.tour_service import tour_service
 
 
 class TourController:
-    def __init__(self):
-        pass
 
     def get_tour(self):
-        return get_tour()
+        return tour_service.get_tour()

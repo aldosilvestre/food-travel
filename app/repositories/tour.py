@@ -3,7 +3,7 @@ import datetime
 
 
 def find_tour_from_user(user_id):
-    return Tour.from_dict(tour)
+    return Tour() # Tour.from_dict(tour)
 
 
 tour = {

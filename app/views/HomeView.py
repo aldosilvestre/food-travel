@@ -11,10 +11,16 @@ class HomeView(ctk.CTk):
     def __init__(self, controller):
         super().__init__()
 
+        ancho = 1280
+        alto = 720
+        ancho_pantalla = self.winfo_screenwidth()
+        alto_pantalla = self.winfo_screenheight()
+        x = (ancho_pantalla - ancho) // 2
+        y = (alto_pantalla - alto) // 2
+        self.geometry(f"{ancho}x{alto}+{x}+{y}")
+
         self.title("Foodie Tour")
-        self.geometry("1280x720")
         self.iconbitmap(get_resource("img/icon.ico"))
-        # self.resizable(False, False)
 
         self.links = controller.user_links
 
@@ -23,7 +29,7 @@ class HomeView(ctk.CTk):
 
         self.navigation_frame = ctk.CTkFrame(self, corner_radius=0)
         self.navigation_frame.grid(row=0, column=0, sticky="nsew")
-        self.navigation_frame.grid_rowconfigure(len(self.links) + 1, weight=1)
+        self.navigation_frame.grid_rowconfigure(len(self.links.value) + 1, weight=1)
         self.content_frame = ctk.CTkFrame(self, corner_radius=0)
         self.content_frame.grid(row=0, column=1, sticky="nsew")
         self.actual_frame = Core.open_component('tour', container=self.content_frame)
@@ -38,7 +44,7 @@ class HomeView(ctk.CTk):
         bg_image_label.grid(row=0, column=0, sticky="we")
 
         row_index = 1
-        for link in self.links:
+        for link in self.links.value:
             icon = ctk.CTkImage(Image.open(get_resource(f"img/{link[2]}.png")), size=(30, 30))
 
             frame = ctk.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10,

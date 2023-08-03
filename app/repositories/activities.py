@@ -1,24 +1,45 @@
 from models.Activity import Activity
 import datetime
+from db.connection import getConnection
+import uuid
+from models.Activity import Activity
+from datetime import datetime
 
 
-def find_activities_by_user(user_id) -> [Activity]:
-    return activities
+class ActivityRepository:
 
+    @staticmethod
+    def save(activity):
+        activity.id = str(uuid.uuid4())
+        return getConnection().Activity.insert_one(activity.to_dict())
 
-def find_activity_by_id(activity_id) -> Activity:
-    result = []
-    for activity in activities:
-        result.append(Activity.from_dict(activity))
-    return next(filter(lambda element: element.id == activity_id, result), None)
+    @staticmethod
+    def find_all():
+        activities = list(getConnection().Activity.find({"datetime": {"$gt": datetime.now()}}))
+        return [Activity.from_dict(activity) for activity in activities]
 
+    @staticmethod
+    def find_activities_by_user(user_id) -> [Activity]:
+        return activities
 
-def get_activities_by_ids(list_id) -> [Activity]:
-    result = []
-    for activity in activities:
-        if activity.id in list_id:
+    @staticmethod
+    def find_by_destiny(destiny_id) -> Activity:
+        return Activity.from_dict(getConnection().Activity.find_one({'destiny_id': destiny_id}))
+
+    @staticmethod
+    def find_activity_by_id(activity_id) -> Activity:
+        result = []
+        for activity in activities:
             result.append(Activity.from_dict(activity))
-    return result
+        return next(filter(lambda element: element.id == activity_id, result), None)
+
+    @staticmethod
+    def get_activities_by_ids(list_id) -> [Activity]:
+        result = []
+        for activity in activities:
+            if activity.id in list_id:
+                result.append(Activity.from_dict(activity))
+        return result
 
 
 activities = [

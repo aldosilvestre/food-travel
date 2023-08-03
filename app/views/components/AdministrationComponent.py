@@ -7,11 +7,12 @@ from views.toplevel.funcionalities.Operations import operations
 
 class AdministrationComponent(Component):
     botones = {
-        'Crear Destino': operations.create_destiny,
-        'Crear Usuario Admin': operations.create_admin_user,
-        'Eliminar Destino': lambda: print,
-        'Eliminar Usuario': lambda: print,
-        'Centrar Mapa': lambda: print,
+        'Crear Destino': lambda: operations.go_to('NewDestinyComponent'),
+        'Crear Actividad': lambda: operations.go_to('NewActivityComponent'),
+        'Crear Usuario Admin': lambda: operations.go_to('NewAdminComponent'),
+        'Eliminar Destino': lambda: operations.go_to('DeleteDestinyComponent'),
+        'Eliminar Usuario':lambda: operations.go_to('DeleteUserComponent'),
+        'Centrar Mapa': lambda: operations.go_to('CenterMapComponent'),
     }
 
     num_columns = 3

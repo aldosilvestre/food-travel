@@ -14,6 +14,14 @@ class LoginView:
         self.login.resizable(False, False)
         self.login.geometry("300x400")
         self.login.focus_force()
+
+        self.login.update_idletasks()
+        ancho = self.login.winfo_width()
+        alto = self.login.winfo_height()
+        x = (self.login.winfo_screenwidth() - ancho) // 2
+        y = (self.login.winfo_screenheight() - alto) // 2
+        self.login.geometry(f"{ancho}x{alto}+{x}+{y}")
+
         # self.login.attributes("-type", "dialog")
 
         frame = ctk.CTkFrame(self.login)

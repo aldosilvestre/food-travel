@@ -1,4 +1,7 @@
+from db.connection import getConnection
 from models.Ubication import Ubication
+import uuid
+import re
 
 
 def have_string(address, text_search):
@@ -8,17 +11,21 @@ def have_string(address, text_search):
 class UbicationRepository:
 
     @staticmethod
-    def find_by_id(id):
-        result = []
-        for ubication in ubications:
-            if ubication['id'] == id:
-                result.append(Ubication.from_dict(ubication))
-        return result[0]
+    def save(ubication):
+        ubication.id = str(uuid.uuid4())
+        getConnection().Ubication.insert_one(ubication.to_dict())
+        return ubication.id
+
+    @staticmethod
+    def find_by_id(ubication_id):
+        return Ubication.from_dict(getConnection().Ubication.find_one({"id": ubication_id}))
 
     @staticmethod
     def find_by_address(addr):
-        result = list(filter(lambda ubication: have_string(ubication['address'], addr), ubications))
-        return [ Ubication.from_dict(ubication) for ubication in result]
+        result = getConnection().Ubication.find(
+            {"address": {"$regex": re.escape(addr), "$options": "i"}})
+        return [Ubication.from_dict(ubication) for ubication in result]
+
 
 
 ubications = [

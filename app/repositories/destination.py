@@ -1,37 +1,30 @@
-# from db.connection import getConnection
+from db.connection import getConnection
 from models.Destination import Destination
 from core.Session import Session
+import uuid
 
 
 class DestinationRepository:
 
     @classmethod
     def find_all(cls):
-        return [Destination.from_dict(destiny) for destiny in destinies]
+        list_destinies = list(getConnection().Destination.find({'disponibility': {"$in": ['Si', 'SI', 'si']}}))
+        return [Destination.from_dict(destiny) for destiny in list_destinies]
 
     @classmethod
     def save(cls, destination):
-        session = Session().get_session()
-        print(f"El usuario {session.username} quizo guardar")
-        # db = getConnection()
-        # result = db.Destination.insert_one(destination.to_dict())
-        # return result
+        destination.id = str(uuid.uuid4())
+        result = getConnection().Destination.insert_one(destination.to_dict())
+        return result
 
     @classmethod
     def find_by_id(cls, id):
-        result = []
-        for destiny in destinies:
-            if destiny['id'] == id:
-                result.append(Destination.from_dict(destiny))
-        return result[0]
+        result = getConnection().Destination.find_one({'id': id})
+        return Destination.from_dict(result)
 
     @classmethod
     def find_by_ubication(cls, ubication):
-        result = []
-        for destiny in destinies:
-            if destiny['ubication'] == ubication:
-                result.append(Destination.from_dict(destiny))
-        return result[0]
+        return Destination.from_dict(getConnection().Destination.find_one({'ubication': ubication}))
 
 
 destinies = [
