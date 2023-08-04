@@ -1,7 +1,7 @@
 # food-travel
 Aplicación de tour de comidas para curso python
 
-# Getting stared
+# Getting started
 
 ## Instalacion
 ### Requisitos
