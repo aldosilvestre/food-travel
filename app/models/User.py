@@ -5,7 +5,10 @@ class User:
 
     @classmethod
     def from_dict(cls, dictionary):
-        return cls(dictionary)
+        return cls(
+            dictionary.get('id', None),
+            dictionary.get('history', [])
+        )
 
     def to_dict(self):
         return {

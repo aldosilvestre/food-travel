@@ -1,4 +1,4 @@
-from services.tour_service import find_destinies
+# from services.tour_service import find_destinies
 
 
 class PlainController:

@@ -11,7 +11,8 @@ import io
 from config import CONFIG
 from utils.form import ordenate_label, generate_stars
 from datetime import datetime
-from controllers.UserController import user_controller
+from controllers.TourController import tour_controller
+from CTkMessagebox import CTkMessagebox
 
 entries = [
     {'field': 'name', 'label': 'Nombre destino', 'type': 'string'},
@@ -105,7 +106,7 @@ class MapComponent(Component):
         self.description_widget.label.pack(fill=ctk.X, anchor='n', pady=10)
 
         self.description_widget.popularity = generate_stars(self.description_widget, marker.data.destiny.popularity)
-        self.description_widget.popularity.pack(fill=ctk.X, anchor='n', padx=10)
+        self.description_widget.popularity.pack(fill=ctk.BOTH, expand=True, anchor='center', padx=10)
 
         imagen = self.load_image(marker.data.destiny.image)
 
@@ -139,7 +140,12 @@ class MapComponent(Component):
         button_subscribe.pack(expand=True, fill=ctk.X, anchor='center', ipady=10)
 
     def subscribe(self, activity):
-        user_controller.subscribe(activity)
+        try:
+            tour_controller.subscribe_to_tour(activity)
+            CTkMessagebox(title="Exito", message="Se subscribio correctamente", icon="info")
+        except RuntimeError as e:
+            CTkMessagebox(title="Error", message="No se logro subscribir", icon="cancel")
+
 
     def load_image(self, url):
         try:

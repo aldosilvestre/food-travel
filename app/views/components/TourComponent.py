@@ -65,19 +65,20 @@ class TourComponent(Component):
 
         self.load_map()
 
-        self.show_destinies.set_position(item.destiny.ubication.coordinates[0], item.destiny.ubication.coordinates[1],
+        self.show_destinies.set_position(float(item.destiny.ubication.coordinates[0]), float(item.destiny.ubication.coordinates[1]),
                                          marker=False)
 
     def load_map(self):
         activities = self.tour.activities
         for activity in activities:
             destiny = activity.destiny
-            self.show_destinies.set_marker(destiny.ubication.coordinates[0], destiny.ubication.coordinates[1],
+            self.show_destinies.set_marker(float(destiny.ubication.coordinates[0]), float(destiny.ubication.coordinates[1]),
                                            text=destiny.name, command=lambda it=activity: self.show_data(it))
 
-        destinies = [tuple(activity.destiny.ubication.coordinates) for activity in self.tour.activities]
+        destinies = [(float(activity.destiny.ubication.coordinates[0]),(float(activity.destiny.ubication.coordinates[1]))) for activity in self.tour.activities]
 
-        self.show_destinies.set_path(destinies)
+        if len(destinies) > 1:
+            self.show_destinies.set_path(destinies)
 
     def show_data(self, activity):
         print(activity)

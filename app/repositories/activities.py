@@ -28,18 +28,9 @@ class ActivityRepository:
 
     @staticmethod
     def find_activity_by_id(activity_id) -> Activity:
-        result = []
-        for activity in activities:
-            result.append(Activity.from_dict(activity))
-        return next(filter(lambda element: element.id == activity_id, result), None)
+        return Activity.from_dict(getConnection().Activity.find_one({'id': activity_id}))
 
-    @staticmethod
-    def get_activities_by_ids(list_id) -> [Activity]:
-        result = []
-        for activity in activities:
-            if activity.id in list_id:
-                result.append(Activity.from_dict(activity))
-        return result
+
 
 
 activities = [

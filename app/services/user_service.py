@@ -3,9 +3,13 @@ from core.Session import Session
 from models.UserLogin import UserLogin
 from repositories.user import UserRepository
 from core.Session import Session
-
+from models.User import User
+from services.activities_service import activity_service
 
 class UserService:
+
+    def get_all(self):
+        return UserRepository.get_all()
 
     def get_links_users(self):
         user_session = Session().get_session()
@@ -19,12 +23,12 @@ class UserService:
         self.validate_user(new_user_normal)
         new_user = UserLogin.from_dict(new_admin)
         new_user.is_admin = True
-        return UserRepository.save_new_user(new_user)
+        return UserRepository.save_new_user_login(new_user)
 
     def create_normal_user(self, new_user_normal):
         self.validate_user(new_user_normal)
         new_user = UserLogin.from_dict(new_user_normal)
-        return UserRepository.save_new_user(new_user)
+        return UserRepository.save_new_user_login(new_user)
 
     def validate_user(self, user):
         empty_values = False
@@ -41,10 +45,8 @@ class UserService:
         if user_exists is not None:
             raise RuntimeError("El usuario existe")
 
-    def subscribe_to_tour(self, activity):
-        user = Session().get_session()
-        userdb = UserRepository.find_by_id(user.id)
-        pass
+    def delete(self, user):
+        return UserRepository.delete(user)
 
 
 user_service = UserService()

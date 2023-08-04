@@ -59,10 +59,10 @@ def generate_stars(parent, popularity):
 
     for i in range(stars_full):
         star_full = ctk.CTkLabel(frame, text='★', text_color="yellow", font=(CONFIG['font-family'], 30))
-        star_full.grid(row=0, column=i)
+        star_full.grid(row=0, column=i, sticky='nsew')
 
     for i in range(stars_full, total_stars):
         star_empty = ctk.CTkLabel(frame, text='☆', text_color="yellow", font=(CONFIG['font-family'], 30))
-        star_empty.grid(row=0, column=i)
+        star_empty.grid(row=0, column=i, sticky='nsew')
 
     return frame
