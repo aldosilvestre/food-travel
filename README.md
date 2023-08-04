@@ -25,6 +25,16 @@ Aplicación de tour de comidas para curso python
       - (IDE)
           Posicionarse en el archivo App.py y presionar ejecutar.
 
+  3. Crear un usuario administrador en la base de datos. La coleccion es UserLogin y no requiere tener la contraseña hasheada. Ej
+
+         {
+          "id": "cb41dc41-7e88-4280-8e0b-9e168cafe877",
+          "name": "Aldo",
+          "last_name": "Silvestre",
+          "password": "123456",
+          "is_admin": true,
+          "username": "asilvestre"
+          }
 
 ## Dependencias
 ![image](https://github.com/aldosilvestre/food-travel/assets/64880747/d6fcff2c-9936-4b54-b231-05705a05f520)
